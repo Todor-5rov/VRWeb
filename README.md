@@ -4,8 +4,9 @@ A fun 3D project that simulates what cyber attacks might look like on Earth and 
 
 ## What it does
 
-- Shows fake cyber attack animations on a spinning Earth
+- Simulates cyber attack animations on a spinning Earth
 - Has interactive quizzes about phishing, ransomware, etc.
+- Has DDoS Lab for simulating DDoS attacks and learning how to prevent and defend against them.
 - Everything is simulated/educational, not real data
 
 ## How to run it
