@@ -1,5 +1,34 @@
-# THREE.js Earth scene
+# 🌍 Cybersecurity Earth Simulator
 
-Watch the tutorial on [YouTube](https://youtu.be/FntV9iEJ0tU)
+A fun 3D project that simulates what cyber attacks might look like on Earth and has some quizzes to learn about cybersecurity. This is just for education and visualization - no real attacks happening here!
 
-Earth texture maps: [PlanetPixelEmporium](https://planetpixelemporium.com/earth.html)
+## What it does
+
+- Shows fake cyber attack animations on a spinning Earth
+- Has interactive quizzes about phishing, ransomware, etc.
+- Everything is simulated/educational, not real data
+
+## How to run it
+
+Start a local server:
+
+```bash
+python -m http.server 8000
+```
+
+Then press `Q`, `W`, `E`, or `R` to try different simulations.
+
+## Credits
+
+Thanks to **Bobby Roe** for the awesome Earth model this is based on:
+
+- [threejs-earth](https://github.com/bobbyroe/threejs-earth)
+- [Live demo](https://bobbyroe.github.io/threejs-earth/)
+
+Earth textures from [PlanetPixelEmporium](http://planetpixelemporium.com/earth.html).
+
+MIT License
+
+---
+
+_Empowering everyone to understand and defend against cyber threats through interactive 3D learning experiences._
