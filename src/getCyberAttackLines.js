@@ -57,6 +57,21 @@ export class CyberAttackSystem {
           target: { type: "server", color: 0x666666 },
         },
       },
+      {
+        id: "mitm",
+        name: "Man-in-the-Middle",
+        color: 0xaa44ff,
+        particleColor: 0xcc88ff,
+        description: "Intercepting and potentially modifying communications",
+        icon: "🕵️",
+        vrDescription:
+          "See how attackers position themselves between communicating parties",
+        demoElements: {
+          attacker: { type: "spy", color: 0xaa44ff },
+          payload: { type: "intercept", color: 0xcc88ff },
+          target: { type: "communication", color: 0x44ff88 },
+        },
+      },
     ];
   }
 
@@ -438,6 +453,153 @@ export class CyberAttackSystem {
 
     console.log(
       `MANUAL DDoS Attack: ${fromLocation.name} → ${toLocation.name}`
+    );
+  }
+
+  /**
+   * Trigger a specific MITM attack for testing
+   */
+  triggerMITMAttack() {
+    if (this.locations.length < 2) return;
+
+    // Find the MITM crime type
+    const mitmCrimeType = this.cyberCrimeTypes.find(
+      (type) => type.name === "Man-in-the-Middle"
+    );
+
+    if (!mitmCrimeType) {
+      console.warn("Man-in-the-Middle crime type not found");
+      return;
+    }
+
+    // Pick two random different cities
+    const fromIndex = Math.floor(Math.random() * this.locations.length);
+    let toIndex = Math.floor(Math.random() * this.locations.length);
+    while (toIndex === fromIndex) {
+      toIndex = Math.floor(Math.random() * this.locations.length);
+    }
+
+    const fromLocation = this.locations[fromIndex];
+    const toLocation = this.locations[toIndex];
+
+    const attackLine = this.createAttackLine(
+      fromLocation,
+      toLocation,
+      mitmCrimeType
+    );
+    attackLine.isActive = true;
+
+    // Add to scene
+    this.attackGroup.add(attackLine.line);
+    attackLine.particles.forEach((particle) => {
+      this.attackGroup.add(particle);
+    });
+
+    this.activeAttacks.push(attackLine);
+
+    // Log the attack
+    this.logAttack(attackLine);
+
+    console.log(
+      `MANUAL MITM Attack: ${fromLocation.name} → ${toLocation.name}`
+    );
+  }
+
+  /**
+   * Trigger a specific Phishing attack for testing
+   */
+  triggerPhishingAttack() {
+    if (this.locations.length < 2) return;
+
+    // Find the Phishing crime type
+    const phishingCrimeType = this.cyberCrimeTypes.find(
+      (type) => type.name === "Phishing Attack"
+    );
+
+    if (!phishingCrimeType) {
+      console.warn("Phishing Attack crime type not found");
+      return;
+    }
+
+    // Pick two random different cities
+    const fromIndex = Math.floor(Math.random() * this.locations.length);
+    let toIndex = Math.floor(Math.random() * this.locations.length);
+    while (toIndex === fromIndex) {
+      toIndex = Math.floor(Math.random() * this.locations.length);
+    }
+
+    const fromLocation = this.locations[fromIndex];
+    const toLocation = this.locations[toIndex];
+
+    const attackLine = this.createAttackLine(
+      fromLocation,
+      toLocation,
+      phishingCrimeType
+    );
+    attackLine.isActive = true;
+
+    // Add to scene
+    this.attackGroup.add(attackLine.line);
+    attackLine.particles.forEach((particle) => {
+      this.attackGroup.add(particle);
+    });
+
+    this.activeAttacks.push(attackLine);
+
+    // Log the attack
+    this.logAttack(attackLine);
+
+    console.log(
+      `MANUAL Phishing Attack: ${fromLocation.name} → ${toLocation.name}`
+    );
+  }
+
+  /**
+   * Trigger a specific Ransomware attack for testing
+   */
+  triggerRansomwareAttack() {
+    if (this.locations.length < 2) return;
+
+    // Find the Ransomware crime type
+    const ransomwareCrimeType = this.cyberCrimeTypes.find(
+      (type) => type.name === "Ransomware Attack"
+    );
+
+    if (!ransomwareCrimeType) {
+      console.warn("Ransomware Attack crime type not found");
+      return;
+    }
+
+    // Pick two random different cities
+    const fromIndex = Math.floor(Math.random() * this.locations.length);
+    let toIndex = Math.floor(Math.random() * this.locations.length);
+    while (toIndex === fromIndex) {
+      toIndex = Math.floor(Math.random() * this.locations.length);
+    }
+
+    const fromLocation = this.locations[fromIndex];
+    const toLocation = this.locations[toIndex];
+
+    const attackLine = this.createAttackLine(
+      fromLocation,
+      toLocation,
+      ransomwareCrimeType
+    );
+    attackLine.isActive = true;
+
+    // Add to scene
+    this.attackGroup.add(attackLine.line);
+    attackLine.particles.forEach((particle) => {
+      this.attackGroup.add(particle);
+    });
+
+    this.activeAttacks.push(attackLine);
+
+    // Log the attack
+    this.logAttack(attackLine);
+
+    console.log(
+      `MANUAL Ransomware Attack: ${fromLocation.name} → ${toLocation.name}`
     );
   }
 

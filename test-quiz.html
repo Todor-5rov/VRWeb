@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Test</title>
+  </head>
+  <body>
+    <button id="test-mitm">Test MITM Quiz</button>
+    <button id="test-phishing">Test Phishing Quiz</button>
+    <button id="test-ransomware">Test Ransomware Quiz</button>
+
+    <script type="module">
+      import { CyberSecurityQuiz } from "./src/getCyberSecurityQuiz.js";
+
+      document.getElementById("test-mitm").addEventListener("click", () => {
+        console.log("Testing MITM quiz...");
+        try {
+          const quiz = new CyberSecurityQuiz();
+          const canvas = quiz.init("Man-in-the-Middle");
+          document.body.appendChild(canvas);
+        } catch (error) {
+          console.error("Error with MITM quiz:", error);
+        }
+      });
+
+      document.getElementById("test-phishing").addEventListener("click", () => {
+        console.log("Testing Phishing quiz...");
+        try {
+          const quiz = new CyberSecurityQuiz();
+          const canvas = quiz.init("Phishing");
+          document.body.appendChild(canvas);
+        } catch (error) {
+          console.error("Error with Phishing quiz:", error);
+        }
+      });
+
+      document
+        .getElementById("test-ransomware")
+        .addEventListener("click", () => {
+          console.log("Testing Ransomware quiz...");
+          try {
+            const quiz = new CyberSecurityQuiz();
+            const canvas = quiz.init("Ransomware");
+            document.body.appendChild(canvas);
+          } catch (error) {
+            console.error("Error with Ransomware quiz:", error);
+          }
+        });
+    </script>
+  </body>
+</html>

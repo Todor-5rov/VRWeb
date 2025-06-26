@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robot Bobby Earth - Cyber Attack Visualization</title>
+    <title>Cyber Attack Visualization</title>
     <style>
       body {
         margin: 0;
@@ -93,7 +93,7 @@
         border-left-width: 5px;
       }
       .attack-entry.clickable::after {
-        content: "👁️ Click to view";
+        content: "🎓 Click to learn";
         font-size: 10px;
         color: #00ffff;
         float: right;
@@ -115,7 +115,10 @@
       <p><strong>Controls:</strong></p>
       <ul>
         <li><kbd>A</kbd> - Trigger random attack</li>
-        <li><kbd>D</kbd> - Trigger DDoS attack</li>
+        <li><kbd>D</kbd> - Trigger DDoS attack (interactive lab)</li>
+        <li><kbd>M</kbd> - Trigger MITM attack (quiz)</li>
+        <li><kbd>P</kbd> - Trigger Phishing attack (quiz)</li>
+        <li><kbd>R</kbd> - Trigger Ransomware attack (quiz)</li>
         <li><kbd>N</kbd> - New York → Tokyo</li>
         <li><kbd>L</kbd> - London → Beijing</li>
         <li><kbd>S</kbd> - Sydney → Moscow</li>
@@ -123,8 +126,9 @@
       <p>
         <small
           >Attacks happen automatically every 0.5-2 seconds. Use mouse to rotate
-          the Earth. Manual attacks are not logged. Click on DDoS attacks in the
-          monitor to view simulation.</small
+          the Earth. Manual attacks are not logged. Click on attacks in the
+          monitor: DDoS opens interactive lab, others open educational
+          quizzes!</small
         >
       </p>
     </div>

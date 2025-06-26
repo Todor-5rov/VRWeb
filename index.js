@@ -10,6 +10,8 @@ import {
 } from "./src/getLocationMarker.js";
 import { CyberAttackSystem } from "./src/getCyberAttackLines.js";
 import { DDoSSimulation } from "./src/getDDoSSimulation.js";
+import { MITMSimulation } from "./src/getMITMSimulation.js";
+import { CyberSecurityQuiz } from "./src/getCyberSecurityQuiz.js";
 
 const w = window.innerWidth;
 const h = window.innerHeight;
@@ -114,41 +116,6 @@ function handleWindowResize() {
 }
 window.addEventListener("resize", handleWindowResize, false);
 
-// Add keyboard controls for manual attack triggering
-function handleKeyPress(event) {
-  switch (event.key.toLowerCase()) {
-    case "a":
-      // Trigger a random attack
-      cyberAttackSystem.startRandomAttack();
-      break;
-    case "n":
-      // Trigger attack from New York to Tokyo
-      cyberAttackSystem.triggerAttack("New York", "Tokyo");
-      break;
-    case "l":
-      // Trigger attack from London to Beijing
-      cyberAttackSystem.triggerAttack("London", "Beijing");
-      break;
-    case "s":
-      // Trigger attack from Sydney to Moscow
-      cyberAttackSystem.triggerAttack("Sydney", "Moscow");
-      break;
-    case "d":
-      // Trigger a DDoS attack specifically
-      cyberAttackSystem.triggerDDoSAttack();
-      break;
-  }
-}
-window.addEventListener("keydown", handleKeyPress, false);
-
-// Add instructions to console
-console.log("Cyber Attack Controls:");
-console.log("Press 'A' - Trigger random attack");
-console.log("Press 'D' - Trigger DDoS attack");
-console.log("Press 'N' - New York → Tokyo");
-console.log("Press 'L' - London → Beijing");
-console.log("Press 'S' - Sydney → Moscow");
-
 // Attack Log UI Management
 class AttackLogUI {
   constructor(cyberAttackSystem) {
@@ -206,13 +173,30 @@ class AttackLogUI {
       </div>
     `;
 
-    // Add click handler for DDoS attacks
+    // Add click handler for interactive attacks
     attackElement.addEventListener("click", () => {
       console.log("Attack clicked:", attack);
 
-      // Check if this is a DDoS attack
+      // Check attack type and launch appropriate learning experience
+      console.log("🎯 Attack type clicked:", attack.crimeType);
+
       if (attack.crimeType === "DDoS Attack") {
         this.launchDDoSSimulation();
+      } else if (attack.crimeType === "Man-in-the-Middle") {
+        console.log("🎯 Launching MITM quiz");
+        this.launchCyberSecurityQuiz("Man-in-the-Middle");
+      } else if (attack.crimeType === "Phishing Attack") {
+        console.log("🎯 Launching Phishing quiz");
+        this.launchCyberSecurityQuiz("Phishing");
+      } else if (attack.crimeType === "Ransomware Attack") {
+        console.log("🎯 Launching Ransomware quiz");
+        this.launchCyberSecurityQuiz("Ransomware");
+      } else {
+        // For any other attack types, show a generic message
+        console.log("❓ Unknown attack type:", attack.crimeType);
+        alert(
+          `📚 ${attack.crimeType} quiz coming soon! This attack type will have an interactive quiz in the next update.`
+        );
       }
     });
 
@@ -287,7 +271,173 @@ class AttackLogUI {
       { once: true }
     );
   }
+
+  launchCyberSecurityQuiz(attackType) {
+    console.log("🎓 Launching quiz for:", attackType);
+
+    // Hide the main earth visualization
+    document.body.style.overflow = "hidden";
+    const earthCanvas = document.querySelector("canvas");
+    if (earthCanvas) {
+      earthCanvas.style.display = "none";
+    }
+
+    // Hide UI panels
+    const instructions = document.getElementById("instructions");
+    const attackLog = document.getElementById("attackLog");
+    if (instructions) instructions.style.display = "none";
+    if (attackLog) attackLog.style.display = "none";
+
+    // Create and start cybersecurity quiz (now 3D floating panel)
+    const cyberQuiz = new CyberSecurityQuiz();
+
+    try {
+      const quizCanvas = cyberQuiz.init(attackType);
+      console.log("🎓 Quiz 3D scene created successfully");
+
+      // Add the quiz canvas to the document
+      if (quizCanvas) {
+        document.body.appendChild(quizCanvas);
+      }
+    } catch (error) {
+      console.error("❌ Error launching quiz:", error);
+      // Restore UI if there's an error
+      if (earthCanvas) earthCanvas.style.display = "block";
+      if (instructions) instructions.style.display = "block";
+      if (attackLog) attackLog.style.display = "block";
+      document.body.style.overflow = "auto";
+      return;
+    }
+
+    // Handle quiz close
+    window.addEventListener(
+      "cyberSecurityQuizClosed",
+      () => {
+        console.log("🎓 Quiz closed, restoring main view");
+        // Restore main visualization
+        if (earthCanvas) {
+          earthCanvas.style.display = "block";
+        }
+        if (instructions) instructions.style.display = "block";
+        if (attackLog) attackLog.style.display = "block";
+        document.body.style.overflow = "auto";
+      },
+      { once: true }
+    );
+
+    // Handle window resize for quiz
+    const handleResize = () => {
+      if (cyberQuiz.handleResize) {
+        cyberQuiz.handleResize();
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    window.addEventListener(
+      "cyberSecurityQuizClosed",
+      () => {
+        window.removeEventListener("resize", handleResize);
+      },
+      { once: true }
+    );
+  }
+
+  launchMITMSimulation() {
+    // Hide the main earth visualization
+    document.body.style.overflow = "hidden";
+    const earthCanvas = document.querySelector("canvas");
+    if (earthCanvas) {
+      earthCanvas.style.display = "none";
+    }
+
+    // Hide UI panels
+    const instructions = document.getElementById("instructions");
+    const attackLog = document.getElementById("attackLog");
+    if (instructions) instructions.style.display = "none";
+    if (attackLog) attackLog.style.display = "none";
+
+    // Create and start MITM simulation
+    const mitmSimulation = new MITMSimulation();
+    mitmSimulation.init();
+
+    // Handle simulation close
+    window.addEventListener(
+      "mitmSimulationClosed",
+      () => {
+        // Restore main visualization
+        if (earthCanvas) {
+          earthCanvas.style.display = "block";
+        }
+        if (instructions) instructions.style.display = "block";
+        if (attackLog) attackLog.style.display = "block";
+        document.body.style.overflow = "auto";
+      },
+      { once: true }
+    );
+
+    // Handle window resize for simulation
+    const handleResize = () => mitmSimulation.handleResize();
+    window.addEventListener("resize", handleResize);
+
+    window.addEventListener(
+      "mitmSimulationClosed",
+      () => {
+        window.removeEventListener("resize", handleResize);
+      },
+      { once: true }
+    );
+  }
 }
 
 // Initialize attack log UI
 const attackLogUI = new AttackLogUI(cyberAttackSystem);
+
+// Add keyboard controls for manual attack triggering (after attackLogUI is created)
+function handleKeyPress(event) {
+  switch (event.key.toLowerCase()) {
+    case "a":
+      // Trigger a random attack
+      cyberAttackSystem.startRandomAttack();
+      break;
+    case "n":
+      // Trigger attack from New York to Tokyo
+      cyberAttackSystem.triggerAttack("New York", "Tokyo");
+      break;
+    case "l":
+      // Trigger attack from London to Beijing
+      cyberAttackSystem.triggerAttack("London", "Beijing");
+      break;
+    case "s":
+      // Trigger attack from Sydney to Moscow
+      cyberAttackSystem.triggerAttack("Sydney", "Moscow");
+      break;
+    case "d":
+      // Launch DDoS Lab directly
+      attackLogUI.launchDDoSSimulation();
+      break;
+    case "m":
+      // Launch MITM quiz directly
+      attackLogUI.launchCyberSecurityQuiz("Man-in-the-Middle");
+      break;
+    case "p":
+      // Launch Phishing quiz directly
+      attackLogUI.launchCyberSecurityQuiz("Phishing");
+      break;
+    case "r":
+      // Launch Ransomware quiz directly
+      attackLogUI.launchCyberSecurityQuiz("Ransomware");
+      break;
+  }
+}
+window.addEventListener("keydown", handleKeyPress, false);
+
+// Add instructions to console
+console.log("Cyber Attack Controls:");
+console.log("Press 'A' - Trigger random attack");
+console.log("Press 'D' - Launch DDoS Lab");
+console.log("Press 'M' - Launch MITM Quiz");
+console.log("Press 'P' - Launch Phishing Quiz");
+console.log("Press 'R' - Launch Ransomware Quiz");
+console.log("Press 'N' - New York → Tokyo");
+console.log("Press 'L' - London → Beijing");
+console.log("Press 'S' - Sydney → Moscow");
