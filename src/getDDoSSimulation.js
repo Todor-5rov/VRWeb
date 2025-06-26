@@ -338,8 +338,8 @@ export class DDoSSimulation {
       #ddos-education-panel {
         position: fixed;
         top: 20px;
-        left: 20px;
-        width: 400px;
+        right: 20px;
+        width: 380px;
         max-height: 80vh;
         background: rgba(0, 0, 0, 0.9);
         color: white;
@@ -348,6 +348,8 @@ export class DDoSSimulation {
         z-index: 1000;
         overflow-y: auto;
         font-family: Arial, sans-serif;
+        border: 2px solid rgba(255, 136, 0, 0.3);
+        box-shadow: 0 0 20px rgba(255, 136, 0, 0.2);
       }
       
       .ddos-panel h2 {
