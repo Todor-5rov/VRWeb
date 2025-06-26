@@ -3,22 +3,140 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robot Bobby Earth</title>
+    <title>Robot Bobby Earth - Cyber Attack Visualization</title>
     <style>
       body {
         margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      #instructions {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 100;
+        font-size: 14px;
+        max-width: 300px;
+      }
+      #instructions h3 {
+        margin: 0 0 10px 0;
+        color: #00ffff;
+      }
+      #instructions ul {
+        margin: 5px 0;
+        padding-left: 20px;
+      }
+      #attackLog {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 100;
+        font-size: 12px;
+        max-width: 350px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      #attackLog h3 {
+        margin: 0 0 10px 0;
+        color: #ff4444;
+        font-size: 14px;
+      }
+      .attack-entry {
+        margin-bottom: 8px;
+        padding: 8px;
+        border-left: 3px solid;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+      }
+      .attack-entry.ransomware {
+        border-left-color: #ff0000;
+      }
+      .attack-entry.data-breach {
+        border-left-color: #ff6600;
+      }
+      .attack-entry.ddos {
+        border-left-color: #ffaa00;
+      }
+      .attack-entry.active {
+        background: rgba(255, 68, 68, 0.1);
+      }
+      .attack-entry.completed {
+        background: rgba(68, 255, 68, 0.1);
+      }
+      .attack-meta {
+        font-size: 10px;
+        color: #aaa;
+        margin-top: 4px;
+      }
+      .attack-route {
+        font-weight: bold;
+        color: #fff;
+      }
+      .attack-type {
+        color: #ff8844;
+        font-weight: bold;
+      }
+      .attack-entry:hover {
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transform: translateX(5px);
+        transition: all 0.2s ease;
+      }
+      .attack-entry.clickable {
+        border-left-width: 5px;
+      }
+      .attack-entry.clickable::after {
+        content: "👁️ Click to view";
+        font-size: 10px;
+        color: #00ffff;
+        float: right;
+        margin-top: -15px;
       }
     </style>
     <script type="importmap">
-			{
-				"imports": {
-					"three": "https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js",
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.161/build/three.module.js",
           "jsm/": "https://cdn.jsdelivr.net/npm/three@0.161/examples/jsm/"
         }
-			}
-		</script>
+      }
+    </script>
   </head>
   <body>
+    <div id="instructions">
+      <h3>🌐 Cyber Attack Visualization</h3>
+      <p><strong>Controls:</strong></p>
+      <ul>
+        <li><kbd>A</kbd> - Trigger random attack</li>
+        <li><kbd>D</kbd> - Trigger DDoS attack</li>
+        <li><kbd>N</kbd> - New York → Tokyo</li>
+        <li><kbd>L</kbd> - London → Beijing</li>
+        <li><kbd>S</kbd> - Sydney → Moscow</li>
+      </ul>
+      <p>
+        <small
+          >Attacks happen automatically every 0.5-2 seconds. Use mouse to rotate
+          the Earth. Manual attacks are not logged. Click on DDoS attacks in the
+          monitor to view simulation.</small
+        >
+      </p>
+    </div>
+    <div id="attackLog">
+      <h3>🚨 Cyber Attack Monitor</h3>
+      <div id="attackList">
+        <div style="color: #888; font-style: italic">
+          Monitoring for attacks...
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="index.js"></script>
   </body>
 </html>
